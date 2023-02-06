@@ -1,21 +1,22 @@
 <?php
-/* Find large number using switch case */
+/* How to find Leap year  */
+
+$year = 1900;
 
 //solution 01:
-$number1 = 60;
-$number2 = 40;
-$number3 = 60;
+if ( $year % 4 == 0 && $year % 100 == 0 && $year % 400 == 0 ) {
+    echo "{$year} is a leap year\n";
+} elseif ( $year % 4 == 0 && $year % 100 == 0 ) {
+    echo "{$year} is not a leap year\n";
+} elseif ( $year % 4 == 0 ) {
+    echo "{$year} is a leap year\n";
+} else {
+    echo "{$year} is not a leap year\n";
+}
 
-switch ( true ) {
-case ( $number1 == $number2 && $number1 == $number3 ):
-    echo "All number are equal";
-    break;
-case ( $number1 >= $number2 && $number1 >= $number3 ):
-    echo "The larger number is $number1";
-    break;
-case ( $number2 >= $number3 ):
-    echo "The larger number is $number2";
-    break;
-default:
-    echo "The larger number is $number3";
+//solution 02:
+if ( $year % 4 == 0 && ( $year % 100 != 0 || $year % 400 == 0 ) ) {
+    echo "{$year} is a leap year\n";
+} else {
+    echo "{$year} is not a leap year\n";
 }
