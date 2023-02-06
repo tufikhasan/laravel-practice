@@ -1,27 +1,19 @@
 <?php
-/* Write a program to check student grade based on the marks using if-else statement.
+/* write a program to swap the values of two variables. */
 
-Conditions:
--> If marks are 60% or more, grade will be First Division.
--> If marks between 45% to 59%, grade will be Second Division.
--> If marks between 33% to 44%, grade will be Third Division.
--> If marks are less than 33%, student will be Fail.
- */
-$marks = 60;
+//solution 01:
+$num1 = 26;
+$num2 = 72;
+$num1 += $num2; // 26 + 72 = 98; now num1 = 98;
+$num2 = $num1 - $num2; // 98 - 72 = 26; now num2 = 26
+$num1 -= $num2; // 98 - 26 = 72; now num1 = 72
+echo "Now num1 = $num1, num2 = $num2 \n";
 
-//solution using - if...elseif...else
-if ( $marks >= 60 && $marks <= 100 ) {
-    echo "First Division\n";
-} elseif ( $marks >= 45 && $marks < 60 ) {
-    echo "Second Division\n";
-} elseif ( $marks >= 33 && $marks < 45 ) {
-    echo "Third Division\n";
-} elseif ( $marks > 0 && $marks < 33 ) {
-    echo "Fail\n";
-} else {
-    echo "Invalid marks\n";
-}
+//solution 02:
+$number1 = 1;
+$number2 = 2;
 
-//solution using ternary operator:
-$result = ( $marks >= 80 && $marks <= 100 ) ? "A+" : (  ( $marks >= 70 && $marks < 80 ) ? "A" : (  ( $marks < 33 && $marks > 0 ) ? "Fail" : (  ( $marks >= 60 && $marks < 70 ) ? "A-" : (  ( $marks >= 50 && $marks < 60 ) ? "B" : (  ( $marks >= 40 && $marks < 50 ) ? "C" : (  ( $marks >= 33 && $marks < 40 ) ? "D" : "invalid marks" ) ) ) ) ) );
-echo $result;
+$temp = $number1;
+$number1 = $number2;
+$number2 = $temp;
+echo "Now number1 = $number1, number2 = $number2";
