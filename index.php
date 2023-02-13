@@ -1,23 +1,27 @@
 <?php
-/*
-Problem: Write a function that takes an array of integers and a target sum as input , and returns a boolean indicating whether there exists a pair of integers in the array that add up to the target sum. You can assume the array has at least two elements and all elements are unique. use a loop in your solution.
-
-input: [5,7,1,2,8,4,3],8
-output: true(because 5+3)8
- */
-function hasPairWithSum( $arr, $target_sum ) {
-    for ( $i = 0; $i < count( $arr ); $i++ ) {
-        for ( $j = $i + 1; $j < count( $arr ); $j++ ) {
-            if ( $arr[$i] + $arr[$j] == $target_sum ) {
-                return true;
-            }
-        }
+//01 Problem: Write a Reusable  PHP Function that can check Even & Odd Number And Return Decision
+function isEvenOrOdd( int $num ): string {
+    $r = $num % 2;
+    if ( $r == 0 && $num > 0 ) {
+        return "{$num} is an Positive Even number";
+    } elseif ( $r == 0 && $num < 0 ) {
+        return "{$num} is an Negative Even number";
+    } elseif ( $r == 1 && $num > 0 ) {
+        return "{$num} is an Positive Odd number";
+    } elseif ( $r == -1 && $num < 0 ) {
+        return "{$num} is an Negative Odd number";
+    } else {
+        return "{$num} is neither Positive nor Negative";
     }
-    return false;
 }
-$result = hasPairWithSum( [5, 7, 1, 2, 8, 4, 3], 8 );
-if ( $result ) {
-    echo "True";
-} else {
-    echo "False";
+echo isEvenOrOdd( 25 );
+echo "\n";
+echo isEvenOrOdd( -5 );
+echo "\n";
+
+//02 Problem: 1+2+3...…….100  Write a loop to calculate the summation of the series
+$sum = 0;
+for ( $i = 1; $i <= 100; $i++ ) {
+    $sum += $i;
 }
+echo "Sum of the series (1+2+3……….100) = {$sum}";
