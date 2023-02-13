@@ -1,27 +1,47 @@
 <?php
-//01 Problem: Write a Reusable  PHP Function that can check Even & Odd Number And Return Decision
-function isEvenOrOdd( int $num ): string {
-    $r = $num % 2;
-    if ( $r == 0 && $num > 0 ) {
-        return "{$num} is an Positive Even number";
-    } elseif ( $r == 0 && $num < 0 ) {
-        return "{$num} is an Negative Even number";
-    } elseif ( $r == 1 && $num > 0 ) {
-        return "{$num} is an Positive Odd number";
-    } elseif ( $r == -1 && $num < 0 ) {
-        return "{$num} is an Negative Odd number";
-    } else {
-        return "{$num} is neither Positive nor Negative";
-    }
-}
-echo isEvenOrOdd( 25 );
-echo "\n";
-echo isEvenOrOdd( -5 );
-echo "\n";
+/*
+Problem: Count Odd Numbers in an Interval Range.
 
-//02 Problem: 1+2+3...…….100  Write a loop to calculate the summation of the series
-$sum = 0;
-for ( $i = 1; $i <= 100; $i++ ) {
-    $sum += $i;
+Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
+
+Example 1:
+Input: low = 3, high = 7
+Output: 3
+Explanation: The odd numbers between 3 and 7 are [3,5,7].
+
+Example 2:
+Input: low = 8, high = 10
+Output: 1
+Explanation: The odd numbers between 8 and 10 are [9].
+ */
+
+//SOLUTION - 01:
+function countOdds( $low, $high ) {
+    return floor(  ( $high + 1 ) / 2 ) - floor( $low / 2 );
 }
-echo "Sum of the series (1+2+3……….100) = {$sum}";
+echo countOdds( 3, 5 );
+
+//SOLUTION - 02:
+// function countOdds( $low, $high ) {
+//     if ( $low % 2 == 0 ) {
+//         $low++;
+//     }
+//     if ( $high % 2 == 0 ) {
+//         $high--;
+//     }
+
+//     return (  ( $high - $low ) / 2 ) + 1;
+// }
+// echo countOdds( 3, 5 );
+
+//SOLUTION - 03:
+// function countOdds( $low, $high ) {
+//     if ( $low % 2 == 0 && $high % 2 == 0 ) {
+//         return (  ( $high - $low ) / 2 );
+//     } elseif (  ( $low % 2 == 0 && $high % 2 != 0 ) || ( $low % 2 != 0 && $high % 2 == 0 ) ) {
+//         return (  ( $high - $low - 1 ) / 2 ) + 1;
+//     } elseif ( $low % 2 != 0 && $high % 2 != 0 ) {
+//         return (  ( $high - $low - 2 ) / 2 ) + 2;
+//     }
+// }
+// echo countOdds( 3, 5 );
