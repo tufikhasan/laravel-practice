@@ -1,47 +1,41 @@
 <?php
-/*
-Problem: Count Odd Numbers in an Interval Range.
+/* Two Sum:
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
-Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
+You can return the answer in any order.
 
 Example 1:
-Input: low = 3, high = 7
-Output: 3
-Explanation: The odd numbers between 3 and 7 are [3,5,7].
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 
 Example 2:
-Input: low = 8, high = 10
-Output: 1
-Explanation: The odd numbers between 8 and 10 are [9].
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+
+Example 3:
+Input: nums = [3,3], target = 6
+Output: [0,1]
+
+Constraints:
+2 <= nums.length <= 104
+-109 <= nums[i] <= 109
+-109 <= target <= 109
+
+Only one valid answer exists.
+Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
  */
 
-//SOLUTION - 01:
-function countOdds( $low, $high ) {
-    return floor(  ( $high + 1 ) / 2 ) - floor( $low / 2 );
+$nums = [2, 5, 4, 7, 3];
+$target = 8;
+function twoSum( $nums, $target ) {
+    for ( $i = 0; $i < count( $nums ); $i++ ) {
+        for ( $j = $i + 1; $j < count( $nums ); $j++ ) {
+            if ( $nums[$i] + $nums[$j] == $target ) {
+                return [$i, $j];
+            }
+        }
+    }
 }
-echo countOdds( 3, 5 );
-
-//SOLUTION - 02:
-// function countOdds( $low, $high ) {
-//     if ( $low % 2 == 0 ) {
-//         $low++;
-//     }
-//     if ( $high % 2 == 0 ) {
-//         $high--;
-//     }
-
-//     return (  ( $high - $low ) / 2 ) + 1;
-// }
-// echo countOdds( 3, 5 );
-
-//SOLUTION - 03:
-// function countOdds( $low, $high ) {
-//     if ( $low % 2 == 0 && $high % 2 == 0 ) {
-//         return (  ( $high - $low ) / 2 );
-//     } elseif (  ( $low % 2 == 0 && $high % 2 != 0 ) || ( $low % 2 != 0 && $high % 2 == 0 ) ) {
-//         return (  ( $high - $low - 1 ) / 2 ) + 1;
-//     } elseif ( $low % 2 != 0 && $high % 2 != 0 ) {
-//         return (  ( $high - $low - 2 ) / 2 ) + 2;
-//     }
-// }
-// echo countOdds( 3, 5 );
+print_r( twoSum( $nums, $target ) );
