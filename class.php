@@ -2,10 +2,6 @@
 class Person {
     private $name;
     private $email;
-    public function __construct( $name, $email ) {
-        $this->name = $name;
-        $this->email = $email;
-    }
     public function setName( $name ) {
         $this->name = $name;
     }
@@ -21,10 +17,14 @@ class Person {
     }
 }
 
-$person = new Person( "Tufik", "tufikhasan05@gmail.com" );
+$person = new Person();
+//Task 2 output
+$person->setName( "Tufik" );
+$person->setEmail( "tufikhasan05@gmail.com" );
 $taskTwoName = $person->getName();
 $taskTwoEmail = $person->getEmail();
 
+//task 3 output
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
     $person->setName( $_POST['name'] );
     $person->setEmail( $_POST['email'] );
@@ -34,6 +34,3 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
     $name = "";
     $email = "";
 }
-
-// $person->setName( "Tufik" );
-// $person->setEmail( "tufikhasan05@gmail.com" );
