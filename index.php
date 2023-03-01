@@ -1,49 +1,40 @@
-<?php include "./class.php";?>
-<!doctype html>
-<html lang="en">
+<?php
+/*
+Problem:
+Write a function toWeirdCase (weirdcase in Ruby) that accepts a string, and returns the same string with all even indexed characters in each word upper cased, and all odd indexed characters in each word lower cased. The indexing just explained is zero based, so the zero-ith index is even, therefore that character should be upper cased and you need to start over for each word.
 
-<head>
-    <title>Module 5 - Assignment</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/295/295128.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-</head>
+The passed in string will only consist of alphabetical characters and spaces(' '). Spaces will only be present if there are multiple words. Words will be separated by a single space(' ').
 
-<body>
-    <div>
-        <div class="login-box">
-            <h2>Task-1 Html Form</h2>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <div class="user-box">
-                    <input type="text" name="name" required="required">
-                    <label>Name</label>
-                </div>
-                <div class="user-box">
-                    <input type="email" name="email" required="required">
-                    <label>Email</label>
-                </div>
-                <a href="#">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <!-- Login -->
-                    <input type="submit" value="Submit">
-                </a>
+Examples:
+toWeirdCase("String"); // => returns "StRiNg"
+toWeirdCase("Weird string case"); // => returns "WeIrD StRiNg CaSe"
+ */
 
-            </form>
-        </div>
-        <div class="output">
-            <h2>Task-2 Basic OOP</h2>
-            <p>Name: <span><?php echo $taskTwoName; ?></span></p>
-            <p>Email: <span><?php echo $taskTwoEmail; ?></span></p>
-            <hr /><br>
-            <h2>Task-3 Super Global</h2>
-            <p>Name: <span><?php echo $name; ?></span></p>
-            <p>Email: <span><?php echo $email; ?></span></p>
-        </div>
-    </div>
-</body>
+// //solution 01:
+function toWeirdCase( $string ) {
+    $arr = array_map( function ( $word ) {
+        $w = "";
+        for ( $i = 0; $i < strlen( $word ); $i++ ) {
+            if ( $i % 2 == 0 ) {
+                $w .= strtoupper( $word[$i] );
+            } else {
+                $w .= strtolower( $word[$i] );
+            }
+        }
+        return $w;
+    }, explode( " ", $string ) );
+    return implode( " ", $arr );
+}
 
-</html>
+// //solution 02:
+// function toWeirdCase( $string ) {
+//     $words = explode( ' ', $string );
+//     foreach ( $words as &$word ) {
+//         for ( $i = 0; $i < strlen( $word ); $i++ ) {
+//             $word[$i] = ( $i % 2 === 0 ) ? strtoupper( $word[$i] ) : strtolower( $word[$i] );
+//         }
+//     }
+//     return implode( ' ', $words );
+// }
+
+echo toWeirdCase( "Weird string case" );
