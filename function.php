@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Dhaka');
-define('DB_NAME', 'users.csv');
+define('DB_NAME', 'db/users.csv');
 if (!file_exists(DB_NAME)) {
   file_put_contents(DB_NAME, json_encode([]), LOCK_EX);
 }

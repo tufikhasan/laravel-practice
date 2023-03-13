@@ -19,7 +19,7 @@ if (isset($_POST['name'])) {
   $img = $_FILES['pic']['name'];
   $rename = date("d_m_Y_h_i_s_a") . "." . pathinfo($img, PATHINFO_EXTENSION);
 
-  $file_location = './' . $rename;
+  $file_location = 'uploads/' . $rename;
 
   //add new student
   if ($name != '' && $email != '' && $password != '' && $file_location != '') {
@@ -27,7 +27,7 @@ if (isset($_POST['name'])) {
     if ($valid) {
       //image upload
       move_uploaded_file($_FILES['pic']['tmp_name'], $file_location);
-      header('location: index.php?result=register');
+      header('location: index.php?result=login');
     } else {
       header('location: index.php?result=register&error=1');
     }
@@ -68,7 +68,7 @@ if ('logout' == $result) {
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="d-flex">
-        <?php if (isset($_SESSION['user'])) { ?>
+        <?php if (isset($_SESSION['user']) && true == $_SESSION['user']) { ?>
           <a href="index.php?result=logout" class="btn btn-sm btn-outline-info" type="button">Logout</a>
         <?php } else { ?>
           <a href="index.php?result=register" class="btn btn-sm btn-outline-info me-2" type="button">Register</a>
@@ -80,7 +80,7 @@ if ('logout' == $result) {
   <div class="container">
     <div class="row">
       <!-- All Users -->
-      <?php if (isset($_SESSION['user'])) { ?>
+      <?php if (isset($_SESSION['user']) && true == $_SESSION['user']) { ?>
         <h1 class="text-center my-3">All Users</h1>
 
       <?php
