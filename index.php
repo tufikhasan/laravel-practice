@@ -41,6 +41,9 @@ if (isset($_POST['lEmail']) && isset($_POST['lPass'])) {
   $_SESSION['user'] = false;
   if ($found) {
     $_SESSION['user'] = true;
+    $_SESSION['name'] = $found;
+  } else {
+    header('location: index.php?result=login&error=1');
   }
 }
 //logout
@@ -81,12 +84,14 @@ if ('logout' == $result) {
     <div class="row">
       <!-- All Users -->
       <?php if (isset($_SESSION['user']) && true == $_SESSION['user']) { ?>
-        <h1 class="text-center my-3">All Users</h1>
+        <div class="col-md-6 mx-auto">
+          <h1 class="text-center my-3">All Users</h1>
+          <button class="btn btn-sm btn-outline-info">User-Email : <?php echo $_SESSION['name']; ?></button>
 
-      <?php
+        <?php
         getAllUsers();
       } else { ?>
-
+        </div>
         <!-- Register form -->
         <?php if ('register' == $result) { ?>
           <div class="col-md-6 mx-auto">
@@ -120,6 +125,9 @@ if ('logout' == $result) {
         <?php if ('login' == $result) { ?>
           <div class="col-md-6 mx-auto">
             <h1 class="text-center">Login</h1>
+            <?php if ($error) {
+              echo "<p class='text-danger'>Invalid Credentials</p>";
+            } ?>
             <form method="POST">
               <div class="mb-3 mt-3">
                 <label for="email" class="form-label">Email:</label>

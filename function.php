@@ -9,27 +9,24 @@ function getAllUsers()
 {
   $data = file_get_contents(DB_NAME);
   $users = json_decode($data, true); ?>
-
-  <div class="col-md-6 mx-auto">
-    <table class="table table-bordered">
-      <thead>
-        <tr class="text-center">
-          <th>Image</th>
-          <th>Name</th>
-          <th>Email</th>
+  <table class="table table-bordered">
+    <thead>
+      <tr class="text-center">
+        <th>Image</th>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($users as $user) { ?>
+        <tr class="align-middle text-center">
+          <td><img src="<?php echo $user['picture'] ?>" class="rounded-circle img-fluid" alt="<?php echo $user['name'] ?>" style="width: 60px;height: 60px;"></td>
+          <td><?php echo $user['name'] ?></td>
+          <td><?php echo $user['email'] ?></td>
         </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($users as $user) { ?>
-          <tr class="align-middle text-center">
-            <td><img src="<?php echo $user['picture'] ?>" class="rounded-circle img-fluid" alt="<?php echo $user['name'] ?>" style="width: 60px;height: 60px;"></td>
-            <td><?php echo $user['name'] ?></td>
-            <td><?php echo $user['email'] ?></td>
-          </tr>
-        <?php } ?>
-      </tbody>
-    </table>
-  </div>
+      <?php } ?>
+    </tbody>
+  </table>
 <?php
 }
 
@@ -78,12 +75,9 @@ function login($email, $pass)
   $found = false;
   foreach ($allUsers as $user) {
     if ($email == $user['email'] && $pass == $user['password']) {
-      $found = true;
+      $found = $user['email'];
       break;
     }
   }
-  if ($found) {
-    return true;
-  }
-  return false;
+  return $found;
 }
