@@ -1,8 +1,4 @@
 <?php
-/*
-Starts a new session and sets a cookie with the user's name.
-Create a new HTML page that displays the contents of the "users.csv" file in a table.
- */
 require_once "./function.php";
 session_name('User_Create');
 session_start([
@@ -23,7 +19,7 @@ if (isset($_POST['name'])) {
   $img = $_FILES['pic']['name'];
   $rename = date("d_m_Y_h_i_s_a") . "." . pathinfo($img, PATHINFO_EXTENSION);
 
-  $file_location = 'uploads/' . $rename;
+  $file_location = './' . $rename;
 
   //add new student
   if ($name != '' && $email != '' && $password != '' && $file_location != '') {
