@@ -10,7 +10,7 @@ c. Write a query to calculate the average salary of all employees.
 => SELECT AVG(salary) AS Average_salary FROM employees;
 
 d. Write a query to count the number of employees who work in the "Marketing" department.
-=> SELECT COUNT(employees.name) AS Total FROM employees,departments WHERE employees.department_id = departments.id AND departments.name = "Marketing";
+=> SELECT COUNT(*) AS Total FROM employees,departments WHERE employees.department_id = departments.id AND departments.name = "Marketing";
 
 e. Write a query to update the salary column of the employee with an id of 1001 to 60000.
 => UPDATE employees SET salary = 60000 WHERE id = 1001;
