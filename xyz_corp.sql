@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2023 at 04:48 PM
+-- Generation Time: Mar 20, 2023 at 05:57 PM
 -- Server version: 5.7.41
 -- PHP Version: 7.4.33
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tufikha1_test`
+-- Database: `xyz_crop`
 --
 
 -- --------------------------------------------------------
@@ -63,13 +63,13 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `name`, `age`, `salary`, `department_id`) VALUES
-(10, 'Jane Grossman', '35', '56000', 6),
-(11, 'Thomas Ziegler', '29', '45000', 7),
-(12, 'Samantha Jameson', '25', '20000', 6),
-(13, 'Theresa Markham', '37', '24000', 8),
-(14, 'Beth Fowler', '31', '65000', 6),
-(15, 'Rick Tulman', '43', '58000', 9),
-(1001, 'Cindy Mason', '36', '34000', 7);
+(1001, 'Cindy Mason', '36', '34000', 7),
+(1002, 'Rick Tulman', '43', '58000', 9),
+(1003, 'Beth Fowler', '31', '65000', 6),
+(1004, 'Theresa Markham', '37', '24000', 8),
+(1005, 'Samantha Jameson', '25', '20000', 6),
+(1006, 'Thomas Ziegler', '29', '45000', 7),
+(1007, 'Jane Grossman', '35', '56000', 6);
 
 --
 -- Indexes for dumped tables
