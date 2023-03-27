@@ -14,11 +14,12 @@ if (isset($_POST['fname']) && 'register' == $task) {
     $r_pass = sha1($_POST['r_password']);
     $rc_pass = sha1($_POST['rc_password']);
 
-    if ($r_pass != $rc_pass) {
-        header('Location: index.php?task=register&error=not-match');
-        exit;
-    } else {
-        if ($fname != '' && $lname != '' && $r_email != '' && $r_pass != '' && $rc_pass != '') {
+
+    if ($fname != '' && $lname != '' && $r_email != '' && $r_pass != '' && $rc_pass != '') {
+        if ($r_pass != $rc_pass) {
+            header('Location: index.php?task=register&error=not-match');
+            exit;
+        } else {
             $valid = $obj->user_register($fname, $lname, $r_email, $r_pass);
             if ($valid) {
                 header("Location: index.php?task=login");
@@ -27,10 +28,10 @@ if (isset($_POST['fname']) && 'register' == $task) {
                 header('Location: index.php?task=register&error=exists');
                 exit;
             }
-        } else {
-            header('Location: index.php?task=register&error=require');
-            exit;
         }
+    } else {
+        header('Location: index.php?task=register&error=require');
+        exit;
     }
 }
 
@@ -101,8 +102,8 @@ if (isset($_POST['logout'])) {
                         <input type="text" name="fname" placeholder="First name" value="<?php echo $fname; ?>">
                         <input type="text" name="lname" placeholder="Last name" value="<?php echo $lname; ?>">
                         <input type="email" name="r_email" placeholder="email address" value="<?php echo $r_email; ?>">
-                        <input type="password" name="r_password" placeholder="Password" value="<?php echo $r_pass; ?>">
-                        <input type="password" name="rc_password" placeholder="Confirm password" value="<?php echo $rc_pass; ?>">
+                        <input type="password" name="r_password" placeholder="Password" value="<?php echo $r_pass; ?>" required>
+                        <input type="password" name="rc_password" placeholder="Confirm password" value="<?php echo $rc_pass; ?>" required>
                         <input type="submit" value="Register">
                     </form>
                     <p>I have an account? <a href="index.php?task=login">Sign in</a></p>
