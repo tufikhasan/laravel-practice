@@ -46,6 +46,7 @@ if ('login' == isset($task) && isset($_POST['email'])) {
         if ($found) {
             $_SESSION['user'] = true;
             $_SESSION['name'] = $found;
+            header('location: index.php?task=welcome');
         } else {
             header('location: index.php?task=login&error=wrong');
         }
@@ -114,7 +115,7 @@ if (isset($_POST['logout'])) {
                 <div class="box">
                     <h2>Log in</h2>
                     <?php if ('wrong' == $error) {
-                        echo "<p class='warning'><span style='color:red'>Invalid cradintial</span></p>";
+                        echo "<p class='warning'><span style='color:red'>Invalid credentials</span></p>";
                     } ?>
                     <form method="post">
                         <input type="email" name="email" required placeholder="email address" value="<?php echo $email; ?>">
