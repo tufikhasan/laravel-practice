@@ -26,7 +26,8 @@ class Blogs {
     public function getPostById( $id ) {
         $query = "SELECT * FROM posts WHERE id='$id'";
         if ( mysqli_query( $this->conn, $query ) ) {
-            return mysqli_query( $this->conn, $query );
+            $data = mysqli_query( $this->conn, $query );
+            return mysqli_fetch_assoc( $data );
         }
     }
     public function getPostByCategory( $categoryName ) {

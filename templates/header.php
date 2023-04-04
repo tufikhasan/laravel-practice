@@ -1,8 +1,25 @@
 <?php include_once "./inc/functions.php";
 $obj = new Blogs();
+define( 'SITE_PATE', 'http://localhost/' );
+
+$script_name = $_SERVER['SCRIPT_NAME'];
+$page_arr = explode( '/', $script_name );
+$page_name = $page_arr[count( $page_arr ) - 1];
+
 $meta_title = "Blog";
 $meta_desc = "This is blog website";
 $meta_keyword = "Blog,News,Magazine";
+$meta_img = "https://plus.unsplash.com/premium_photo-1663852297654-56d979cf72d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60";
+$meta_url = SITE_PATE;
+
+if ( "blog.php" == $page_name ) {
+    $post_id = $_GET['post_id'];
+    $post = $obj->getPostById( $post_id );
+    $meta_title = $post['title'];
+    $meta_desc = $post['content'];
+    $meta_img = $post['image'];
+    $meta_url = SITE_PATE . $page_name . "?post_id=" . $post_id;
+}
 
 ?>
 <!doctype html>
@@ -16,6 +33,11 @@ $meta_keyword = "Blog,News,Magazine";
     <title><?php echo $meta_title; ?></title>
     <meta name="description" content="<?php echo $meta_desc; ?>">
     <meta name="keywords" content="<?php echo $meta_keyword; ?>">
+
+    <meta property="og:title" content="<?php echo $meta_title; ?>" />
+    <meta property="og:image" content="<?php echo $meta_img; ?>" />
+    <meta property="og:url" content="<?php echo $meta_url; ?>" />
+    <meta property="og:site_name" content="<?php echo SITE_PATE; ?>" />
 </head>
 
 <body>

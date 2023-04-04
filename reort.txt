@@ -1,0 +1,20 @@
+Introduction:
+In this report, I will be discussing the design and implementation of my personal blog using HTML, CSS, and PHP. The blog consists of four pages: homepage, blog page, single post page, and contact page. The main objective of this blog is to showcase my writing skills and create an online presence for myself. I faced some challenges during the design and implementation process, but with research and practice, I was able to overcome them.
+
+Homepage:
+The homepage is the first page that visitors will see when they visit my blog. The design of the homepage is clean and straightforward, with a header that includes a logo and navigation menu. The featured post section displays the latest post's title, image, and excerpt to entice visitors to read the full post. The navigation menu has links to the other pages on the website, including the blog page and the contact page.
+
+Blog page:
+The blog page displays a list of blog posts with the most recent post at the top. Each blog post has a title, image, excerpt, and a "Read More" button that links to the full post. The sidebar includes a search bar and a list of categories to help visitors navigate the blog. Implementing the "Read More" button was challenging as it required creating a link to the single post page and passing the post's ID.
+
+Single post page:
+The single post page displays the full blog post, including the title, image, content, and author. Social sharing buttons are included to allow readers to share the post on social media. The single post page required passing the post's ID to retrieve the post's details from the database, and displaying the author's name required joining the posts table with the users table.
+
+Contact page:
+The contact page includes a form that allows users to enter their name, email, subject, and message. When the user submits the form, the data is sent to a PHP script that processes the data and sends an email to the blog owner. Implementing the email functionality was challenging as it required setting up a mail server and configuring the PHP script to send emails.
+
+Responsive design:
+Ensuring that the website is responsive and looks good on all devices, including desktop, tablet, and mobile, was a significant challenge. I used CSS media queries to adjust the layout and styling of the website based on the device's screen size. Testing the website on different devices and screen sizes helped me identify and fix responsive design issues.
+
+Conclusion:
+Designing and implementing a personal blog using HTML, CSS, and PHP was a challenging but rewarding experience. The blog consists of four pages: homepage, blog page, single post page, and contact page. The homepage includes a featured post section and a navigation menu with links to the other pages on the website. The blog page lists the blog posts with a "Read More" button to view the full post, and the single post page displays the full blog post and includes social sharing buttons. The contact page includes a form that sends an email to the blog owner when submitted. The website is responsive and looks good on all devices.
