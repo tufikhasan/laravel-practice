@@ -1,134 +1,185 @@
-<?php
-session_start();
-include_once "./functions.php";
-$obj = new User();
-
-$task = $_GET['task'] ?? 'register';
-$error = $_GET['error'] ?? "";
-
-$fname = $lname = $r_email = $r_pass = $rc_pass = "";
-if (isset($_POST['fname']) && 'register' == $task) {
-    $fname = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_SPECIAL_CHARS);
-    $lname = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_SPECIAL_CHARS);
-    $r_email = filter_input(INPUT_POST, 'r_email', FILTER_SANITIZE_EMAIL);
-    $r_pass = sha1($_POST['r_password']);
-    $rc_pass = sha1($_POST['rc_password']);
-
-
-    if ($fname != '' && $lname != '' && $r_email != '' && $r_pass != '' && $rc_pass != '') {
-        if ($r_pass != $rc_pass) {
-            header('Location: index.php?task=register&error=not-match');
-            exit;
-        } else {
-            $valid = $obj->user_register($fname, $lname, $r_email, $r_pass);
-            if ($valid) {
-                header("Location: index.php?task=login");
-                exit;
-            } else {
-                header('Location: index.php?task=register&error=exists');
-                exit;
-            }
-        }
-    } else {
-        header('Location: index.php?task=register&error=require');
-        exit;
-    }
-}
-
-//Login
-$email = $password = "";
-if ('login' == isset($task) && isset($_POST['email'])) {
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = sha1($_POST['password']);
-    if ($_POST['email'] != '' && $_POST['password'] != '') {
-        $found = $obj->login($email, $password);
-        $_SESSION['user'] = false;
-        if ($found) {
-            $_SESSION['user'] = true;
-            $_SESSION['name'] = $found;
-            header('location: index.php?task=welcome');
-        } else {
-            header('location: index.php?task=login&error=wrong');
-        }
-    }
-}
-if (isset($_POST['logout'])) {
-    $_SESSION['user'] = false;
-    session_destroy();
-    header('location: index.php?task=login');
-}
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment 8</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <main class="main">
-        <?php if (isset($_SESSION['user']) && true == $_SESSION['user']) { ?>
-            <!-- Welcome -->
-            <div class="box">
-                <h2>Welcome</h2>
-                <p style="text-transform:none"><b>Your First Name: </b> <?php echo $_SESSION['name']; ?></p>
-                <form method="POST">
-                    <input type="hidden" name="logout" value="1">
-                    <input type="submit" value="Sign out">
-                </form>
+<?php include_once "./templates/header.php";?>
+<!-- Main content section  -->
+<section class="text-gray-600 body-font">
+  <div class="container p-5 mx-auto">
+    <div class="flex flex-wrap -m-4">
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGNvZGluZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Engineer</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap ">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
             </div>
-        <?php } else { ?>
-            <?php if ('register' == $task) { ?>
-                <!-- Register Area -->
-                <div class="box">
-                    <h2>Register</h2>
-                    <p class="warning">
-                        <?php
-                        if ('not-match' == $error) {
-                            echo "<span style='color:green'>Password not match</span>";
-                        }
-                        if ('exists' == $error) {
-                            echo "<span style='color:brown'>Already exists</span>";
-                        }
-                        if ('require' == $error) {
-                            echo "<span style='color:red'>All field are required</span>";
-                        }
-                        ?>
-                    </p>
-                    <form method="post" action="index.php?task=register">
-                        <input type="text" name="fname" placeholder="First name" value="<?php echo $fname; ?>">
-                        <input type="text" name="lname" placeholder="Last name" value="<?php echo $lname; ?>">
-                        <input type="email" name="r_email" placeholder="email address" value="<?php echo $r_email; ?>">
-                        <input type="password" name="r_password" placeholder="Password" value="<?php echo $r_pass; ?>" required>
-                        <input type="password" name="rc_password" placeholder="Confirm password" value="<?php echo $rc_pass; ?>" required>
-                        <input type="submit" value="Register">
-                    </form>
-                    <p>I have an account? <a href="index.php?task=login">Sign in</a></p>
-                </div>
-            <?php } ?>
-            <?php if ('login' == $task) { ?>
-                <!-- Login Area -->
-                <div class="box">
-                    <h2>Log in</h2>
-                    <?php if ('wrong' == $error) {
-                        echo "<p class='warning'><span style='color:red'>Invalid credentials</span></p>";
-                    } ?>
-                    <form method="post">
-                        <input type="email" name="email" required placeholder="email address" value="<?php echo $email; ?>">
-                        <input type="password" name="password" required placeholder="password" value="<?php echo $password; ?>">
-                        <p><a href="#">Forgot password?</a></p>
-                        <input type="submit" value="login">
-                    </form>
-                    <p>Don't have an account? <a href="index.php?task=register">Sign up</a></p>
-                </div>
-            <?php } ?>
-
-        <?php } ?>
-    </main>
-</body>
-
-</html>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHRlY2hub2xvZ3l8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Machine learning</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://plus.unsplash.com/premium_photo-1661662835250-7c7f20432351?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHRlY2hub2xvZ3l8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Working</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap ">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVjaG5vbG9neXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Coding</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap ">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://images.unsplash.com/photo-1581093806997-124204d9fa9d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZW5naW5lZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Engineer</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap ">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://plus.unsplash.com/premium_photo-1677094310918-cc302203b21c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFjaGluZSUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Machine learning</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://images.unsplash.com/photo-1520085601670-ee14aa5fa3e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvZGluZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Working</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap ">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 lg:w-1/4 md:w-1/3">
+        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+          <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+            src="https://plus.unsplash.com/premium_photo-1678565869434-c81195861939?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGNvZGluZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            alt="blog">
+          <div class="p-6">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">Coding</h2>
+            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">Lorem ipsum dolor sit amet</h1>
+            <p class="leading-relaxed mb-3">Nesciunt voluptas nemo soluta, earum quis impedit optio vel sit unde veniam.
+              Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="flex items-center flex-wrap ">
+              <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<?php include_once "./templates/footer.php";?>
