@@ -1,16 +1,28 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>BMI Calculator</title>
+    <link rel="shortcut icon"
+        href="https://play-lh.googleusercontent.com/bE5yyy3pCAi0IpUTbB_xqsSwsvukYUelGzrU3uzS1TRtFr_wpauqLNvbrHa01hZ6N10"
+        type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <h1 class="text-3xl font-bold underline bg-red-500 text-red-600">
-        Hello world !
-    </h1>
+    <form>
+        <h2>BMI Calculator</h2>
+        <label for="weightInput">Weight</label>
+        <input type="number" id="weightInput" name="weight" required autofocus>
+        <label for="heightInput">Height</label>
+        <input type="number" id="heightInput" name="height" required>
+        <button id="calculateBtn">Calculate</button>
+        <p id="result"></p>
+    </form>
+    <script src="./script.js"></script>
 </body>
 
 </html>
