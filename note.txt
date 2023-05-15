@@ -1,1 +1,0 @@
-website_link = https://bmi-calculator-tufik.netlify.app
