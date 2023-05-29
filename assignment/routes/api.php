@@ -13,4 +13,4 @@ Route::middleware( 'auth:sanctum' )->get( '/user', function ( Request $request )
 Route::resource( 'product', ProductController::class );
 
 // Task 7: Resource Controller
-Route::resource( 'post', PostController::class );
+Route::resource( 'posts', PostController::class );
