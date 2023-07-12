@@ -30,10 +30,14 @@
             <hr class="my-4" />
             @forelse ($blog['comment'] as $comment)
                 <div class="flex items-start mb-4">
-                    <div>
-                        <h5 class="font-bold">{{ $comment->name }}</h5>
-                        <h5 class="font-bold">{{ $comment->email }}</h5>
-                        <p>{{ $comment->comment }}</p>
+                    <div class="flex">
+                        <span
+                            class="flex justify-center items-center w-[40px] h-[40px] bg-indigo-600 text-white font-bold rounded-[50%] mr-5 uppercase">{{ substr($comment['name'], 0, 1) }}</span>
+                        <div>
+                            <h5 class="font-bold">{{ $comment->email }}</h5>
+                            <p>{{ $comment->comment }}</p>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             @empty
@@ -66,9 +70,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-    function textSlice(text) {
-        return.slice(0, 1);
-    }
     try {
         const form = document.getElementById("comment_form");
         form.addEventListener("submit", async (e) => {
