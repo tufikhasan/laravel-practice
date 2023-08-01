@@ -6,10 +6,7 @@
 </head>
 
 <body>
-    <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-        {{ $content }}
-    </div>
-    </div>
+    <p>{{ $content }}</p>
 </body>
 
 </html>
