@@ -18,10 +18,10 @@ class ReservationController extends Controller {
                 $query->where( 'mobile', $request->mobile )
                     ->orWhere( 'email', $request->email );
             } )->first();
-        if ( $exists == 1 ) {
+        if ( $exists ) {
             $notification = [
                 'message'    => "You Are Already Reserved",
-                'alert-type' => 'success',
+                'alert-type' => 'error',
             ];
             return redirect()->back()->with( $notification );
         }
