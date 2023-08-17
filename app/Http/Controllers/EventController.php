@@ -75,7 +75,7 @@ class EventController extends Controller {
         // update event
         if ( $request->file( 'image' ) ) {
             $image = $request->file( 'image' );
-            if ( $event->image ) {
+            if ( $event->image && file_exists( public_path( 'upload/event/' . $event->image ) ) ) {
                 unlink( str_replace( '\\', '/', public_path( 'upload/event/' . $event->image ) ) );
             }
             $imageUrl = hexdec( uniqid() ) . '.' . $image->getClientOriginalExtension();
@@ -114,7 +114,7 @@ class EventController extends Controller {
 
     function deleteevent( Request $request ) {
         $event = Event::where( ['user_id' => Auth::id(), 'id' => $request->id] )->first();
-        if ( $event->image ) {
+        if ( $event->image && file_exists( public_path( 'upload/event/' . $event->image ) ) ) {
             unlink( str_replace( '\\', '/', public_path( 'upload/event/' . $event->image ) ) );
         }
         $event->delete();
