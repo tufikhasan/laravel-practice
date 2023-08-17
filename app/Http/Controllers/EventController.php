@@ -120,7 +120,7 @@ class EventController extends Controller {
         $event->delete();
 
         $notification = [
-            'message'    => "event Deleted Successfully",
+            'message'    => "Event Deleted Successfully",
             'alert-type' => 'success',
         ];
 

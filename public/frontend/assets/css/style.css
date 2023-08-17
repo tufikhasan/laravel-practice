@@ -6815,3 +6815,8 @@ body.active-dark-mode p {
 .active-dark-mode .copyright__text p {
     color: #9099ab;
 }
+.blog__post__thumb img {
+    height: 300px;
+    width: 100%;
+    object-fit: fill;
+}
