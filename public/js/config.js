@@ -1,30 +1,25 @@
 function showLoader() {
-    document.getElementById('loader').classList.remove('d-none')
+    document.getElementById("loader").classList.remove("d-none");
 }
 function hideLoader() {
-    document.getElementById('loader').classList.add('d-none')
+    document.getElementById("loader").classList.add("d-none");
 }
 
-function successToast(msg) {
-    Toastify({
-        gravity: "bottom", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        text: msg,
-        className: "mb-5",
-        style: {
-            background: "green",
-        }
-    }).showToast();
-}
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
 
-function errorToast(msg) {
-    Toastify({
-        gravity: "bottom", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        text: msg,
-        className: "mb-5",
-        style: {
-            background: "red",
-        }
-    }).showToast();
+function message(type, msg) {
+    Toast.fire({
+        icon: type,
+        title: msg,
+    });
 }

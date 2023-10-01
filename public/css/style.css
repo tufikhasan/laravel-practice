@@ -2,6 +2,23 @@
 @import "sidebar.css";
 @import "progress.css";
 @import "dropdownmenu.css";
+
+.card-img-top {
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+}
+
+@media print {
+    @page {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    body {
+        padding-top: 72px;
+        padding-bottom: 72px ;
+    }
+}
 .d-none{
   display: none;
 }
@@ -41,3 +58,4 @@ a:hover {
 .swal2-styled:focus{
   box-shadow: none !important;
 }
+
